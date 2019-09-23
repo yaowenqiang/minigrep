@@ -6,7 +6,6 @@ use std::time::Duration;
 use std::thread;
 
 
-
 fn main() {
     let args: Vec<String> = env::args().collect();
     let config = minigrep::Config::new(&args).unwrap_or_else(|err| {
@@ -31,8 +30,8 @@ fn main() {
         simulated_user_specified_value,
         simplated_random_number
     );
-    simulated_expensive_calculation(10);
-
+    //simulated_expensive_calculation(10);
+    //expensive_closure(10)
 
 
 }
@@ -43,15 +42,22 @@ fn simulated_expensive_calculation(intensity: u32) -> u32 {
 }
 
 fn generate_workout(intensity: u32, random_number: u32) {
-    let expensive_result = simulated_expensive_calculation(intensity);
+    let expensive_closure = |num| {
+        println!("calculating slowly...");
+        thread::sleep(Duration::from_secs(2));
+        num
+    };
+    //let expensive_result = simulated_expensive_calculation(intensity);
     if intensity < 25 {
         println!(
             "Today, do {} pushups!",
-            expensive_result
+            //expensive_result
+            expensive_closure(intensity)
         );
         println!(
             "Next, do {} situps!",
-            expensive_result
+            //expensive_result
+            expensive_closure(intensity)
         );
     } else {
         if random_number == 3 {
@@ -59,7 +65,8 @@ fn generate_workout(intensity: u32, random_number: u32) {
         } else {
             println!(
                 "Today, run for {} minutes!",
-                expensive_result
+                expensive_closure(intensity)
+               // expensive_result
             );
         }
     } 
